@@ -84,11 +84,11 @@ public class App {
         return opcao;
     }
 
-    public static int[][] criarMatriz(int[][] matriz) {
-        // Lógica para a soma da matriz
-        // Retorne a matriz resultante
-        return matriz;
-    }
+    // public static int[][] criarMatriz(int[][] matriz) {
+    // // Lógica para a soma da matriz
+    // // Retorne a matriz resultante
+    // return matriz;
+    // }
 
     public static int[][] realizarSubtracao(int[][] matriz) {
         // Lógica para a subtração da matriz
