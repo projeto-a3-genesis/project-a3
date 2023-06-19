@@ -1,52 +1,88 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class App {
     public static void main(String[] args) {
-        int opcao = exibirMenu();
+        int opcao, quantidade;
+        List<int[][]> listaMatrizes;
+
+        opcao = exibirMenu();
+        listaMatrizes = new ArrayList<>();
 
         switch (opcao) {
             case 1:
-                int[][] matrizA = criarMatriz();
-                int[][] matrizB = criarMatriz();
-                int[][] matrizSoma = criarMatriz();
-                System.out.println("\nResultado da Soma:");
-                imprimirMatriz(matrizSoma);
+                System.out.println("Usuário escolheu número 1");
+                quantidade = quantasMatrizes();
+                System.out.printf("Usuário escolheu %d matriz(es)\n", quantidade);
+                for (int i = 0; i < quantidade; i++) {
+                    int[][] matriz = criarMatriz(i + 1);
+                    listaMatrizes.add(matriz);
+                    String stringMatriz = imprimirMatriz(matriz);
+                    System.out.println(stringMatriz);
+                }
+
                 break;
             case 2:
-                int[][] matrizSubtracao = realizarSubtracao();
-                System.out.println("\nResultado da Subtração:");
-                imprimirMatriz(matrizSubtracao);
+                System.out.println("Usuário escolheu número 2");
+                quantidade = quantasMatrizes();
                 break;
             case 3:
-                int[][] matrizMultiplicacao = realizarMultiplicacao();
-                System.out.println("\nResultado da Multiplicação:");
-                imprimirMatriz(matrizMultiplicacao);
+                System.out.println("Usuário escolheu número 3");
+                quantidade = quantasMatrizes();
                 break;
             case 4:
-                int determinante = calcularDeterminante(matriz);
-                System.out.println("\nDeterminante da Matriz: " + determinante);
+                System.out.println("Usuário escolheu número 4");
+                quantidade = quantasMatrizes();
                 break;
             case 0:
-                System.out.println("\nEncerrando o programa.");
+                System.out.println("Usuário escolheu número 0");
                 break;
             default:
                 System.out.println("\nOpção inválida. Encerrando o programa.");
                 break;
         }
+
     }
 
-    public static int[][] criarMatriz() {
+    public static int exibirMenu() {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.print("Digite o número de linhas da matriz: ");
+        System.out.println("\nBem-vindo ao solucionador de matrizes e determinantes!");
+        System.out.println("\nMenu de Operações:");
+        System.out.println("1. Soma da Matriz");
+        System.out.println("2. Subtração da Matriz");
+        System.out.println("3. Multiplicação da Matriz");
+        System.out.println("4. Determinante da Matriz");
+        System.out.println("0. Sair");
+
+        System.out.print("Escolha uma operação (0-4): ");
+        int opcao = scanner.nextInt();
+
+        return opcao;
+    }
+
+    public static int quantasMatrizes() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Digite a quantidade de matrizes para fazer a operação: ");
+        int quantidade = scanner.nextInt();
+
+        return quantidade;
+    }
+
+    public static int[][] criarMatriz(int numMatriz) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.printf("Digite o número de linhas da matriz %d: ", numMatriz);
         int linhas = scanner.nextInt();
 
-        System.out.print("Digite o número de colunas da matriz: ");
+        System.out.printf("Digite o número de colunas da matriz %d: ", numMatriz);
         int colunas = scanner.nextInt();
 
         int[][] matriz = new int[linhas][colunas];
 
-        System.out.println("Digite os valores da matriz:");
+        System.out.printf("Digite os valores da matriz %d: \n", numMatriz);
 
         for (int i = 0; i < linhas; i++) {
             for (int j = 0; j < colunas; j++) {
@@ -58,37 +94,26 @@ public class App {
         return matriz;
     }
 
-    public static void imprimirMatriz(int[][] matriz) {
+    public static String imprimirMatriz(int[][] matriz) {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("\n");
+
         for (int i = 0; i < matriz.length; i++) {
             for (int j = 0; j < matriz[i].length; j++) {
-                System.out.print(matriz[i][j] + " ");
+                sb.append(matriz[i][j]).append(" ");
             }
-            System.out.println();
+            sb.append("\n");
         }
-    } //hhh
 
-    public static int exibirMenu() {
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.println("\nMenu de Operações:");
-        System.out.println("1. Soma da Matriz");
-        System.out.println("2. Subtração da Matriz");
-        System.out.println("3. Multiplicação da Matriz");
-        System.out.println("4. Determinante da Matriz");
-        System.out.println("0. Sair");
-
-        System.out.print("Escolha uma operação (0-4): ");
-        scanner.nextLine();
-        int opcao = scanner.nextInt();
-
-        return opcao;
+        return sb.toString();
     }
 
-    // public static int[][] criarMatriz(int[][] matriz) {
-    // // Lógica para a soma da matriz
-    // // Retorne a matriz resultante
-    // return matriz;
-    // }
+    public static int[][] realizarSoma(int[][] matriz) {
+        // Lógica para a soma da matriz
+        // Retorne a matriz resultante
+        return matriz;
+    }
 
     public static int[][] realizarSubtracao(int[][] matriz) {
         // Lógica para a subtração da matriz
