@@ -83,7 +83,7 @@ public class App {
                 stringMatriz = imprimirMatrizesCriadas(listaMatrizes, "");
                 System.out.println(stringMatriz);
                 int determinante = calcularDeterminante(matriz);
-                System.out.printf("O determinante da matriz é:\n%d", determinante);
+                System.out.printf("O determinante da matriz é:\n|%d|", determinante);
                 break;
             case 0:
                 System.out.println("Usuário escolheu número 0");
