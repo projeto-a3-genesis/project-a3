@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
+import interacoesComUsuario.Interacoes;
+import operacoes.Operacoes;
 
 public class App {
     public static void main(String[] args) {
@@ -9,21 +10,21 @@ public class App {
         String stringMatriz;
         int[][] resultado;
 
-        opcao = exibirMenu();
+        opcao = Interacoes.exibirMenu();
         listaMatrizes = new ArrayList<>();
 
         switch (opcao) {
-            case 1:
-                quantidade = quantasMatrizes();
+            case 1: // soma
+                quantidade = Interacoes.quantasMatrizes();
                 for (int i = 0; i < quantidade; i++) {
-                    int[][] matriz = criarMatriz(i + 1);
+                    int[][] matriz = Interacoes.criarMatriz(i + 1);
                     listaMatrizes.add(matriz);
                 }
 
                 stringMatriz = imprimirMatrizesCriadas(listaMatrizes, "+");
                 System.out.println(stringMatriz);
 
-                resultado = obterMatrizSoma(listaMatrizes);
+                resultado = Operacoes.obterMatrizSoma(listaMatrizes);
 
                 if (resultado.length == 0) {
                     System.out.println(
@@ -34,17 +35,17 @@ public class App {
                 }
 
                 break;
-            case 2:
-                quantidade = quantasMatrizes();
+            case 2: // subtração
+                quantidade = Interacoes.quantasMatrizes();
                 for (int i = 0; i < quantidade; i++) {
-                    int[][] matriz = criarMatriz(i + 1);
+                    int[][] matriz = Interacoes.criarMatriz(i + 1);
                     listaMatrizes.add(matriz);
                 }
 
                 stringMatriz = imprimirMatrizesCriadas(listaMatrizes, "-");
                 System.out.println(stringMatriz);
 
-                resultado = obterMatrizSubtracao(listaMatrizes);
+                resultado = Operacoes.obterMatrizSubtracao(listaMatrizes);
 
                 if (resultado.length == 0) {
                     System.out.println(
@@ -55,18 +56,18 @@ public class App {
                 }
 
                 break;
-            case 3:
+            case 3: // multiplicação
                 System.out.println("Usuário escolheu número 3");
-                quantidade = quantasMatrizes();
+                quantidade = Interacoes.quantasMatrizes();
                 for (int i = 0; i < quantidade; i++) {
-                    int[][] matriz = criarMatriz(i + 1);
+                    int[][] matriz = Interacoes.criarMatriz(i + 1);
                     listaMatrizes.add(matriz);
                 }
 
                 stringMatriz = imprimirMatrizesCriadas(listaMatrizes, "x");
                 System.out.println(stringMatriz);
 
-                resultado = obterMatrizMultiplicacao(listaMatrizes);
+                resultado = Operacoes.obterMatrizMultiplicacao(listaMatrizes);
 
                 if (resultado.length == 0) {
                     System.out.println(
@@ -76,72 +77,23 @@ public class App {
                     System.out.printf("O resultado da multiplicação das matrizes é:\n%s", resultadoString);
                 }
                 break;
-            case 4:
+            case 4: // determinante
                 System.out.println("Usuário escolheu número 4");
-                int[][] matriz = criarMatriz(1);
+                int[][] matriz = Interacoes.criarMatriz(1);
                 listaMatrizes.add(matriz);
                 stringMatriz = imprimirMatrizesCriadas(listaMatrizes, "");
                 System.out.println(stringMatriz);
-                int determinante = calcularDeterminante(matriz);
+                int determinante = Operacoes.calcularDeterminante(matriz);
                 System.out.printf("O determinante da matriz é:\n|%d|", determinante);
                 break;
-            case 0:
+            case 0: // sair
                 System.out.println("Usuário escolheu número 0");
                 break;
-            default:
+            default: // opcao inválida
                 System.out.println("\nOpção inválida. Encerrando o programa.");
                 break;
         }
 
-    }
-
-    public static int exibirMenu() {
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.println("\nBem-vindo ao solucionador de matrizes e determinantes!");
-        System.out.println("\nMenu de Operações:");
-        System.out.println("1. Soma da Matriz");
-        System.out.println("2. Subtração da Matriz");
-        System.out.println("3. Multiplicação da Matriz");
-        System.out.println("4. Determinante da Matriz");
-        System.out.println("0. Sair");
-
-        System.out.print("Escolha uma operação (0-4): ");
-        int opcao = scanner.nextInt();
-
-        return opcao;
-    }
-
-    public static int quantasMatrizes() {
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.print("Digite a quantidade de matrizes para fazer a operação: ");
-        int quantidade = scanner.nextInt();
-
-        return quantidade;
-    }
-
-    public static int[][] criarMatriz(int numMatriz) {
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.printf("Digite o número de linhas da matriz %d: ", numMatriz);
-        int linhas = scanner.nextInt();
-
-        System.out.printf("Digite o número de colunas da matriz %d: ", numMatriz);
-        int colunas = scanner.nextInt();
-
-        int[][] matriz = new int[linhas][colunas];
-
-        System.out.printf("Digite os valores da matriz %d: \n", numMatriz);
-
-        for (int i = 0; i < linhas; i++) {
-            for (int j = 0; j < colunas; j++) {
-                System.out.print("Valor para a posição [" + i + "][" + j + "]: ");
-                matriz[i][j] = scanner.nextInt();
-            }
-        }
-
-        return matriz;
     }
 
     public static String imprimirMatrizesCriadas(List<int[][]> lista, String separador) {
@@ -177,148 +129,4 @@ public class App {
         return sb.toString();
     }
 
-    public static int[][] obterMatrizSoma(List<int[][]> lista) {
-        if (lista.isEmpty()) {
-            // Retorna uma matriz vazia ou lança uma exceção, dependendo do seu requisito
-        }
-
-        int[][] matrizSoma = lista.get(0); // Inicializa a matriz soma com o primeiro elemento da lista
-
-        // Percorre os elementos da lista a partir do segundo elemento
-        for (int i = 1; i < lista.size(); i++) {
-            int[][] matrizAtual = lista.get(i);
-
-            // Verifica se as dimensões das matrizes são compatíveis
-            if (matrizSoma.length != matrizAtual.length || matrizSoma[0].length != matrizAtual[0].length) {
-                int[][] matrizVazia = new int[0][0];
-                return matrizVazia;
-            }
-
-            // Realiza a soma das matrizes
-            for (int j = 0; j < matrizSoma.length; j++) {
-                for (int k = 0; k < matrizSoma[j].length; k++) {
-                    matrizSoma[j][k] += matrizAtual[j][k];
-                }
-            }
-        }
-
-        return matrizSoma;
-    }
-
-    public static int[][] obterMatrizSubtracao(List<int[][]> lista) {
-        if (lista.isEmpty()) {
-            // Retorna uma matriz vazia ou lança uma exceção, dependendo do seu requisito
-        }
-
-        int[][] matrizSubtracao = lista.get(0); // Inicializa a matriz subtração com o primeiro elemento da lista
-
-        // Percorre os elementos da lista a partir do segundo elemento
-        for (int i = 1; i < lista.size(); i++) {
-            int[][] matrizAtual = lista.get(i);
-
-            // Verifica se as dimensões das matrizes são compatíveis
-            if (matrizSubtracao.length != matrizAtual.length || matrizSubtracao[0].length != matrizAtual[0].length) {
-                int[][] matrizVazia = new int[0][0];
-                return matrizVazia;
-            }
-
-            // Realiza a subtração das matrizes
-            for (int j = 0; j < matrizSubtracao.length; j++) {
-                for (int k = 0; k < matrizSubtracao[j].length; k++) {
-                    matrizSubtracao[j][k] -= matrizAtual[j][k];
-                }
-            }
-        }
-
-        return matrizSubtracao;
-    }
-
-    public static int[][] obterMatrizMultiplicacao(List<int[][]> lista) {
-        if (lista.isEmpty()) {
-            // Retorna uma matriz vazia ou lança uma exceção, dependendo do seu requisito
-        }
-
-        int[][] matrizResultado = lista.get(0); // Inicializa a matriz resultado com o primeiro elemento da lista
-
-        // Percorre os elementos da lista a partir do segundo elemento
-        for (int i = 1; i < lista.size(); i++) {
-            int[][] matrizAtual = lista.get(i);
-
-            // Verifica se as dimensões das matrizes são compatíveis
-            if (matrizResultado[0].length != matrizAtual.length) {
-                int[][] matrizVazia = new int[0][0];
-                return matrizVazia;
-            }
-
-            // Cria uma nova matriz para armazenar o resultado da multiplicação
-            int[][] novaMatriz = new int[matrizResultado.length][matrizAtual[0].length];
-
-            // Realiza a multiplicação das matrizes
-            for (int j = 0; j < matrizResultado.length; j++) {
-                for (int k = 0; k < matrizAtual[0].length; k++) {
-                    for (int l = 0; l < matrizResultado[0].length; l++) {
-                        novaMatriz[j][k] += matrizResultado[j][l] * matrizAtual[l][k];
-                    }
-                }
-            }
-
-            matrizResultado = novaMatriz; // Atualiza a matriz resultado com o resultado da multiplicação atual
-        }
-
-        return matrizResultado;
-    }
-
-    public static int calcularDeterminante(int[][] matriz) {
-        int dimensao = matriz.length;
-
-        if (dimensao == 1) {
-            // Caso base: matriz de dimensão 1, o determinante é o próprio elemento
-            return matriz[0][0];
-        } else if (dimensao == 2) {
-            // Caso base: matriz de dimensão 2, o determinante é calculado diretamente
-            return (matriz[0][0] * matriz[1][1]) - (matriz[0][1] * matriz[1][0]);
-        } else {
-            int determinante = 0;
-
-            for (int i = 0; i < dimensao; i++) {
-                int[][] submatriz = obterSubmatriz(matriz, 0, i);
-                int cofator = matriz[0][i] * calcularDeterminante(submatriz);
-
-                if (i % 2 == 0) {
-                    determinante += cofator;
-                } else {
-                    determinante -= cofator;
-                }
-            }
-
-            return determinante;
-        }
-    }
-
-    // Função auxiliar para obter a submatriz removendo a linha 'linha' e a coluna
-    // 'coluna'
-    private static int[][] obterSubmatriz(int[][] matriz, int linha, int coluna) {
-        int dimensao = matriz.length;
-        int[][] submatriz = new int[dimensao - 1][dimensao - 1];
-
-        int linhaSubmatriz = 0;
-        int colunaSubmatriz;
-
-        for (int i = 0; i < dimensao; i++) {
-            if (i != linha) {
-                colunaSubmatriz = 0;
-
-                for (int j = 0; j < dimensao; j++) {
-                    if (j != coluna) {
-                        submatriz[linhaSubmatriz][colunaSubmatriz] = matriz[i][j];
-                        colunaSubmatriz++;
-                    }
-                }
-
-                linhaSubmatriz++;
-            }
-        }
-
-        return submatriz;
-    }
 }
