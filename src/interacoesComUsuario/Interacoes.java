@@ -3,10 +3,10 @@ package interacoesComUsuario;
 import java.util.Scanner;
 
 public class Interacoes {
+
     public static int exibirMenu() {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("\nBem-vindo ao solucionador de matrizes e determinantes!");
         System.out.println("\nMenu de Operações:");
         System.out.println("1. Soma da Matriz");
         System.out.println("2. Subtração da Matriz");
@@ -50,5 +50,18 @@ public class Interacoes {
         int quantidade = scanner.nextInt();
 
         return quantidade;
+    }
+
+    public static boolean opcaoDeterminante() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Deseja calcular a determinante do resultado? (s/n): ");
+        char option = scanner.next().charAt(0);
+
+        if (option == 's') {
+            return true;
+        }
+
+        return false;
     }
 }
